@@ -1,47 +1,74 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+import { themeVars } from '../../helpers/theme'
 
 export type ButtonProps = {
-  primary?: boolean
+  variant: 'outlined' | 'contained' | 'text'
   disabled?: boolean
   size?: 'small' | 'medium' | 'large'
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const StyledButton = styled.button<ButtonProps>`
-  border: 0;
-  line-height: 1;
-  font-size: 15px;
+  padding: 7px 15px;
+  border: none;
+  background-color: transparent;
+  border-radius: ${themeVars.round};
   cursor: pointer;
-  font-weight: 700;
-  font-weight: bold;
-  border-radius: 3px;
-  display: inline-block;
-  padding: ${(props) =>
-    props.size === 'small' ? '7px 25px 8px' : props.size === 'medium' ? '9px 30px 11px' : '14px 30px 16px'};
-  color: ${(props) => (props.primary ? '#1b116e' : '#ffffff')};
-  background-color: ${(props) => (props.primary ? '#6bedb5' : '#1b116e')};
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  &:hover {
-    background-color: ${(props) => (props.primary ? '#55bd90' : '#6bedb5')};
-  }
-  &:active {
-    border: solid 2px #1b116e;
-    padding: ${(props) =>
-      props.size === 'small' ? '5px 23px 6px' : props.size === 'medium' ? '7px 28px 9px' : '12px 28px 14px'};
-  }
+  transition: color, background-color, border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+
+  ${({ variant }) =>
+    variant === 'outlined' &&
+    css`
+      padding: 6px 14px;
+      background-color: ${themeVars.white};
+      border: 1px solid ${themeVars.border};
+      &:hover,
+      &:focus {
+        color: ${themeVars.primaryLighter};
+        border-color: ${themeVars.primaryLighter};
+      }
+      &:active {
+        color: ${themeVars.primaryDark};
+        border-color: ${themeVars.primaryDark};
+      }
+    `};
+  ${({ variant }) =>
+    variant === 'contained' &&
+    css`
+      color: ${themeVars.white};
+      background-color: ${themeVars.primary};
+      &:hover,
+      &:focus {
+        background-color: ${themeVars.primaryDark};
+        border-color: ${themeVars.primaryDark};
+      }
+      &:active {
+        background-color: ${themeVars.primaryDarkest};
+        border-color: ${themeVars.primaryDarkest};
+      }
+    `}
+  ${({ variant }) =>
+    variant === 'text' &&
+    css`
+      color: ${themeVars.primary};
+      &:hover,
+      &:focus {
+        color: ${themeVars.primaryDark};
+      }
+      &:active {
+        color: ${themeVars.primaryDarkest};
+      }
+    `}
 `
 
 export default function Button({
-  size,
-  primary,
-  disabled,
-  onClick,
+  variant = 'outlined',
+  // size,
+  // disabled,
+  // onClick,
   children,
-  ...props
-}: React.PropsWithChildren<ButtonProps>) {
-  return (
-    <StyledButton type="button" onClick={onClick} primary={primary} disabled={disabled} size={size} {...props}>
-      {children}
-    </StyledButton>
-  )
+}: // ...props
+React.PropsWithChildren<ButtonProps>) {
+  return <StyledButton variant={variant}>{children}</StyledButton>
 }
