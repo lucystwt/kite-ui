@@ -103,7 +103,7 @@ const StyledButton = styled.button<ButtonProps>`
 
   ${({ disabled, variant }) =>
     disabled &&
-    css<ButtonProps>`
+    css`
       color: ${themeVars.text_disabled};
       cursor: not-allowed;
       ${() => {

@@ -42,7 +42,7 @@ export const themeVars = {
   white: '#fff',
   black: '#000',
   border: '#d9d9d9',
-  round: '3px',
+  round: '4px',
   disabled: 'rgba(0, 0, 0, 0.12)',
   text_small: '0.75rem',
   text_medium: '0.875rem',
