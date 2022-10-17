@@ -1,20 +1,82 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const Button = styled.button`
+import { themeVars } from '../../helpers/theme'
+
+export type ButtonProps = {
+  variant: 'outlined' | 'contained' | 'text'
+  disabled?: boolean
+  size?: 'small' | 'medium' | 'large'
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+}
+
+const StyledButton = styled.button<ButtonProps>`
+  background-color: transparent;
+  padding: 7px 15px;
   border: none;
-  border-radius: 0.5rem;
-  background-color: #186faf;
-  color: hsl(0deg, 0%, 98%);
-  padding: 0.75rem;
+  border-radius: ${themeVars.round};
   cursor: pointer;
-  &:hover {
-    background-color: #0a558c;
-  }
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #62b0e8;
-    background-color: #0a558c;
-  }
+  transition: color, background-color, border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+
+  ${({ variant }) =>
+    variant === 'outlined' &&
+    css`
+      background-color: ${themeVars.white};
+      padding: 6px 14px;
+      border: 1px solid ${themeVars.border};
+
+      &:hover,
+      &:focus {
+        color: ${themeVars.primaryLighter};
+        border-color: ${themeVars.primaryLighter};
+      }
+
+      &:active {
+        color: ${themeVars.primaryDark};
+        border-color: ${themeVars.primaryDark};
+      }
+    `};
+
+  ${({ variant }) =>
+    variant === 'contained' &&
+    css`
+      color: ${themeVars.white};
+      background-color: ${themeVars.primary};
+
+      &:hover,
+      &:focus {
+        background-color: ${themeVars.primaryDark};
+        border-color: ${themeVars.primaryDark};
+      }
+
+      &:active {
+        background-color: ${themeVars.primaryDarkest};
+        border-color: ${themeVars.primaryDarkest};
+      }
+    `}
+
+  ${({ variant }) =>
+    variant === 'text' &&
+    css`
+      color: ${themeVars.primary};
+
+      &:hover,
+      &:focus {
+        color: ${themeVars.primaryDark};
+      }
+
+      &:active {
+        color: ${themeVars.primaryDarkest};
+      }
+    `}
 `
 
-export default Button
+export default function Button({
+  variant = 'outlined',
+  // size,
+  // disabled,
+  // onClick,
+  children,
+}: // ...props
+React.PropsWithChildren<ButtonProps>) {
+  return <StyledButton variant={variant}>{children}</StyledButton>
+}
