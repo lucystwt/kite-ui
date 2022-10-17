@@ -19,6 +19,7 @@
     }
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build-clean": "rimraf ./dist",
     "build": "pnpm build-clean && rollup -c"
   },
