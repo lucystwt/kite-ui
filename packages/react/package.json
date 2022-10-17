@@ -19,7 +19,8 @@
     }
   },
   "scripts": {
-    "build": "rollup -c"
+    "build-clean": "rimraf ./dist",
+    "build": "pnpm build-clean && rollup -c"
   },
   "dependencies": {
     "react": "^18.2.0",
