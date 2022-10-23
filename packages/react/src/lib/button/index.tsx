@@ -1,60 +1,36 @@
 import styled, { css } from 'styled-components'
 
-import { themeVars } from '../../helpers/theme'
+import { getFontSize, getPadding, getTransition, themeVars } from '../../helpers/theme'
+import { Size } from '../../helpers/types'
 
 export type ButtonProps = {
   variant?: 'outlined' | 'contained' | 'text'
-  size?: 'small' | 'medium' | 'large'
+  size?: Size
+  color?: string
   disabled?: boolean
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const StyledButton = styled.button<ButtonProps>`
+type StyledButtonProps = Required<Pick<ButtonProps, 'variant' | 'size'>>
+
+const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
   line-height: 1.75;
   background-color: transparent;
   border: none;
-  border-radius: ${themeVars.round};
+  border-radius: ${themeVars.rounded};
   cursor: pointer;
-  transition: color, background-color, border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
-
-  ${({ size }) => {
-    if (size === 'small')
-      return css`
-        font-size: ${themeVars.text_small};
-        padding: 4px 10px;
-      `
-    else if (size === 'medium')
-      return css`
-        font-size: ${themeVars.text_medium};
-        padding: 6px 16px;
-      `
-    else if (size === 'large')
-      return css`
-        font-size: ${themeVars.text_large};
-        padding: 8px 22px;
-      `
-  }}
+  transition: ${getTransition()};
+  font-size: ${({ size }) => getFontSize(size)};
+  padding: ${({ size }) => getPadding(size)};
 
   ${({ variant, size, disabled }) => {
     if (variant === 'outlined')
       return css`
         background-color: ${themeVars.white};
-        border: 1px solid ${themeVars.border};
-        ${() => {
-          if (size === 'small')
-            return css`
-              padding: 3px 9px;
-            `
-          else if (size === 'medium')
-            return css`
-              padding: 5px 15px;
-            `
-          else if (size === 'large')
-            return css`
-              padding: 7px 21px;
-            `
-        }}
+        border: 1px solid ${themeVars.borderColor};
+        padding: ${getPadding(size, { offset: -1 })};
+
         ${!disabled &&
         css`
           &:hover,
@@ -72,6 +48,7 @@ const StyledButton = styled.button<ButtonProps>`
       return css`
         color: ${themeVars.white};
         background-color: ${themeVars.primary};
+
         ${!disabled &&
         css`
           &:hover,
@@ -88,6 +65,7 @@ const StyledButton = styled.button<ButtonProps>`
     else if (variant === 'text')
       return css`
         color: ${themeVars.primary};
+
         ${!disabled &&
         css`
           &:hover,
@@ -106,14 +84,15 @@ const StyledButton = styled.button<ButtonProps>`
     css`
       color: ${themeVars.text_disabled};
       cursor: not-allowed;
+
       ${() => {
         if (variant === 'outlined')
           return css`
-            border: 1px solid ${themeVars.disabled};
+            border: 1px solid ${themeVars.disabledBg};
           `
         else if (variant === 'contained')
           return css`
-            background-color: ${themeVars.disabled};
+            background-color: ${themeVars.disabledBg};
           `
       }}
     `}
@@ -121,7 +100,7 @@ const StyledButton = styled.button<ButtonProps>`
 
 export default function Button({
   variant = 'outlined',
-  size = 'medium',
+  size = 'md',
   disabled,
   onClick,
   children,

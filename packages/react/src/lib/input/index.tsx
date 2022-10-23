@@ -1,76 +1,105 @@
-import styled from 'styled-components'
+import { forwardRef } from 'react'
+import styled, { css } from 'styled-components'
+
+import { getFontSize, getPaddingY, getTransition, themeVars } from '../../helpers/theme'
+import { CssProps, Size } from '../../helpers/types'
 
 export type InputProps = {
-  id?: string
-  label?: string
-  error?: boolean
-  message?: string
-  success?: boolean
-  disabled?: boolean
+  value?: string
+  size?: Size
   placeholder?: string
+  disabled?: boolean
+  prefix?: React.ReactNode
+  suffix?: React.ReactNode
   onChange?: React.ChangeEventHandler<HTMLInputElement>
-}
+  onClick?: React.MouseEventHandler<HTMLInputElement>
+} & CssProps
 
-const StyledInput = styled.input<InputProps>`
-  height: 40px;
-  width: 300px;
-  border-radius: 3px;
-  border: solid 2px
-    ${(props) => (props.disabled ? '#e4e3ea' : props.error ? '#a9150b' : props.success ? '#067d68' : '#353637')};
-  background-color: #fff;
-  &:focus {
-    border: solid 2px #1b116e;
+type StyledInputProps = Required<Pick<InputProps, 'disabled'>> & { sz: Size; hasFix: boolean }
+
+const inputCss = css<Pick<StyledInputProps, 'sz' | 'disabled'>>`
+  font-size: ${({ sz }) => getFontSize(sz)};
+  padding: ${({ sz }) => `${getPaddingY(sz)} 8px`};
+  border: 1px solid ${themeVars.borderColor};
+  border-radius: ${themeVars.rounded};
+  transition: ${getTransition()};
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          cursor: not-allowed;
+          background-color: ${themeVars.disabledBg};
+        `
+      : css`
+          &:hover,
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            border-color: ${themeVars.primary_400};
+          }
+          &:focus {
+            border-color: ${themeVars.primary_600};
+          }
+        `}
+`
+
+const Container = styled.div<Pick<StyledInputProps, 'sz' | 'disabled' | 'hasFix'>>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
+  ${({ hasFix }) => hasFix && inputCss}
+`
+
+const StyledInput = styled.input<StyledInputProps>`
+  ${({ hasFix }) =>
+    !hasFix
+      ? inputCss
+      : css`
+          outline: none;
+          border: none;
+          cursor: inherit;
+        `};
+`
+
+const IconContainer = styled.span`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.54);
+`
+
+export default forwardRef<HTMLInputElement, InputProps>(function Input(
+  { value, size = 'md', placeholder, disabled = false, prefix, suffix, className, style, onChange, onClick },
+  ref
+) {
+  const hasFix = !!prefix || !!suffix
+  const styledProps = {
+    type: 'text',
+    value,
+    placeholder,
+    disabled,
+    sz: size,
+    hasFix,
+    onChange,
   }
-`
 
-const StyledLabel = styled.div<InputProps>`
-  font-size: 14px;
-  color: ${(props) => (props.disabled ? '#e4e3ea' : '#080808')};
-  padding-bottom: 6px;
-`
-
-const StyledMessage = styled.div<InputProps>`
-  font-size: 14px;
-  color: #a9150b;
-  padding-top: 4px;
-`
-
-const StyledText = styled.p<InputProps>`
-  margin: 0px;
-  color: ${(props) => (props.disabled ? '#e4e3ea' : props.error ? '#a9150b' : '#080808')};
-`
-
-export default function Input({
-  id,
-  disabled,
-  label,
-  message,
-  error,
-  success,
-  onChange,
-  placeholder,
-  ...props
-}: InputProps) {
+  if (!hasFix) return <StyledInput ref={ref} {...styledProps} className={className} style={style} onClick={onClick} />
   return (
-    <>
-      <StyledLabel>
-        <StyledText disabled={disabled} error={error}>
-          {label}
-        </StyledText>
-      </StyledLabel>
-      <StyledInput
-        id={id}
-        type="text"
-        onChange={onChange}
-        disabled={disabled}
-        error={error}
-        success={success}
-        placeholder={placeholder}
-        {...props}
-      ></StyledInput>
-      <StyledMessage>
-        <StyledText error={error}>{message}</StyledText>
-      </StyledMessage>
-    </>
+    <Container
+      ref={ref}
+      hasFix={hasFix}
+      disabled={disabled}
+      sz={size}
+      className={className}
+      style={style}
+      onClick={onClick}
+    >
+      {prefix && <IconContainer>{prefix}</IconContainer>}
+      <StyledInput {...styledProps} />
+      {suffix && <IconContainer>{suffix}</IconContainer>}
+    </Container>
   )
-}
+})

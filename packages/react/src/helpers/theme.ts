@@ -1,18 +1,6 @@
 // import { generate } from '@ant-design/colors'
 
-type PrimaryColors = {
-  primary: string
-  primary_50: string
-  primary_100: string
-  primary_200: string
-  primary_300: string
-  primary_400: string
-  primary_500: string
-  primary_600: string
-  primary_700: string
-  primary_800: string
-  primary_900: string
-}
+import { PrimaryColors, Size } from './types'
 
 function generatePrimaryColors(): PrimaryColors {
   // const colors = generate('#764abc')
@@ -41,11 +29,45 @@ export const themeVars = {
   ...generatePrimaryColors(),
   white: '#fff',
   black: '#000',
-  border: '#d9d9d9',
-  round: '4px',
-  disabled: 'rgba(0, 0, 0, 0.12)',
-  text_small: '0.75rem',
-  text_medium: '0.875rem',
-  text_large: '1rem',
+  borderColor: 'rgba(0, 0, 0, 0.23)',
+  rounded: '0.25rem',
+  disabledText: '#00000040',
+  disabledBg: '#f5f5f5',
   text_disabled: 'rgba(0, 0, 0, 0.26)',
+}
+
+export function getFontSize(size: Size) {
+  let remValue = 0
+  if (size === 'sm') remValue = 0.875
+  else if (size === 'md') remValue = 1
+  else if (size === 'lg') remValue = 1.125
+  return `${remValue}rem`
+}
+
+export function getPaddingX(size: Size, { offset = 0 }: Partial<{ offset: number }> = {}) {
+  let x = 0
+  if (size === 'sm') x = 10
+  else if (size === 'md') x = 16
+  else if (size === 'lg') x = 22
+  return `${x + offset}px`
+}
+
+export function getPaddingY(size: Size, { offset = 0 }: Partial<{ offset: number }> = {}) {
+  let y = 0
+  if (size === 'sm') y = 4
+  else if (size === 'md') y = 6
+  else if (size === 'lg') y = 8
+  return `${y + offset}px`
+}
+
+export function getPadding(size: Size, { offset = 0 }: Partial<{ offset: number }> = {}) {
+  return `${getPaddingY(size, { offset })} ${getPaddingX(size, { offset })}`
+}
+
+export function getTransition() {
+  return 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter cubic-bezier(0.4, 0, 0.2, 1) 150ms'
+}
+
+export function getShadow() {
+  return '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
 }
