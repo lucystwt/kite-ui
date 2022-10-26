@@ -71,12 +71,10 @@ export default function Select<T>(props: SelectProps<T>) {
           transition: ${getTransition()};
           cursor: pointer;
           min-width: ${size == 'lg' ? 200 : size === 'md' ? 160 : 120}px;
-
           ${disabled
             ? css`
                 cursor: not-allowed;
                 background-color: ${themeVars.disabledBg};
-
                 .text {
                   color: ${themeVars.disabledText};
                 }

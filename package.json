@@ -8,7 +8,8 @@
     "dev-packages": "cd packages/react && pnpm run dev",
     "dev-examples": "cd examples/react && pnpm run dev",
     "dev": "concurrently \"pnpm run dev-packages\" \"pnpm run dev-examples\"",
-    "build": "cd packages/react && pnpm run build"
+    "build-react":"rimraf ./packages/react/dist && cd packages/react && pnpm run build",
+    "example-react":"cd examples/react && pnpm run dev"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.8.4"
   }
 }

@@ -1,5 +1,5 @@
+import { css } from '@emotion/react'
 import { forwardRef } from 'react'
-import styled, { css } from 'styled-components'
 
 import { getFontSize, getPaddingY, getTransition, themeVars } from '../../helpers/theme'
 import { CssProps, Size } from '../../helpers/types'
@@ -15,55 +15,33 @@ export type InputProps = {
   onClick?: React.MouseEventHandler<HTMLInputElement>
 } & CssProps
 
-type StyledInputProps = Required<Pick<InputProps, 'disabled'>> & { sz: Size; hasFix: boolean }
-
-const inputCss = css<Pick<StyledInputProps, 'sz' | 'disabled'>>`
-  font-size: ${({ sz }) => getFontSize(sz)};
-  padding: ${({ sz }) => `${getPaddingY(sz)} 8px`};
+const getInputCss = (size: Size, disabled: boolean) => css`
+  font-size: ${getFontSize(size)};
+  padding: ${`${getPaddingY(size)} 8px`};
   border: 1px solid ${themeVars.borderColor};
   border-radius: ${themeVars.rounded};
   transition: ${getTransition()};
 
-  ${({ disabled }) =>
-    disabled
-      ? css`
-          cursor: not-allowed;
-          background-color: ${themeVars.disabledBg};
-        `
-      : css`
-          &:hover,
-          &:focus {
-            outline: none;
-          }
-          &:hover {
-            border-color: ${themeVars.primary_400};
-          }
-          &:focus {
-            border-color: ${themeVars.primary_600};
-          }
-        `}
-`
-
-const Container = styled.div<Pick<StyledInputProps, 'sz' | 'disabled' | 'hasFix'>>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.25rem;
-  ${({ hasFix }) => hasFix && inputCss}
-`
-
-const StyledInput = styled.input<StyledInputProps>`
-  ${({ hasFix }) =>
-    !hasFix
-      ? inputCss
-      : css`
+  ${disabled
+    ? css`
+        cursor: not-allowed;
+        background-color: ${themeVars.disabledBg};
+      `
+    : css`
+        &:hover,
+        &:focus {
           outline: none;
-          border: none;
-          cursor: inherit;
-        `};
+        }
+        &:hover {
+          border-color: ${themeVars.primary_400};
+        }
+        &:focus {
+          border-color: ${themeVars.primary_600};
+        }
+      `}
 `
 
-const IconContainer = styled.span`
+const iconContainer = css`
   height: 100%;
   display: flex;
   justify-content: center;
@@ -76,30 +54,49 @@ export default forwardRef<HTMLInputElement, InputProps>(function Input(
   ref
 ) {
   const hasFix = !!prefix || !!suffix
-  const styledProps = {
+  const inputProps = {
     type: 'text',
     value,
     placeholder,
     disabled,
-    sz: size,
-    hasFix,
     onChange,
   }
 
-  if (!hasFix) return <StyledInput ref={ref} {...styledProps} className={className} style={style} onClick={onClick} />
+  if (!hasFix)
+    return (
+      <input
+        ref={ref}
+        css={getInputCss(size, disabled)}
+        {...inputProps}
+        className={className}
+        style={style}
+        onClick={onClick}
+      />
+    )
   return (
-    <Container
+    <div
       ref={ref}
-      hasFix={hasFix}
-      disabled={disabled}
-      sz={size}
+      css={css`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.25rem;
+        ${getInputCss(size, disabled)};
+      `}
       className={className}
       style={style}
       onClick={onClick}
     >
-      {prefix && <IconContainer>{prefix}</IconContainer>}
-      <StyledInput {...styledProps} />
-      {suffix && <IconContainer>{suffix}</IconContainer>}
-    </Container>
+      {prefix && <span css={iconContainer}>{prefix}</span>}
+      <input
+        css={css`
+          outline: none;
+          border: none;
+          cursor: inherit;
+        `}
+        {...inputProps}
+      />
+      {suffix && <span css={iconContainer}>{suffix}</span>}
+    </div>
   )
 })
