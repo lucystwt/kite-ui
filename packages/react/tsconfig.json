@@ -10,11 +10,12 @@
     "strict": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "outDir": "dist",
     "declaration": true,
     "declarationDir": "./",
     "sourceMap": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
   },
   "exclude": ["node_modules", "dist"]
 }

@@ -4,6 +4,7 @@ import App from '../app'
 import ButtonRoute from './button'
 import InputRoute from './input'
 import SelectRoute from './select'
+import Select2Route from './select2'
 
 export const components = [
   {
@@ -23,6 +24,12 @@ export const components = [
     path: '/select',
     component: <SelectRoute />,
     name: 'Select',
+  },
+  {
+    key: 'select2',
+    path: '/select2',
+    component: <Select2Route />,
+    name: 'Select2',
   },
 ]
 

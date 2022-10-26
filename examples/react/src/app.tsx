@@ -7,8 +7,8 @@ export default function App() {
   const location = useLocation()
 
   return (
-    <div className="w-screen h-screen flex">
-      <nav className="basis-[200px] h-full bg-zinc-700">
+    <div className="w-screen h-screen flex overflow-hidden">
+      <nav className="basis-[200px] h-full bg-zinc-700 flex-shrink-0 overflow-hidden">
         <ul className="list-none m-0 p-0">
           {components.map((c) => (
             <li key={c.key}>
@@ -25,7 +25,7 @@ export default function App() {
           ))}
         </ul>
       </nav>
-      <div className="flex-auto p-6">{<Outlet />}</div>
+      <div className="flex-auto p-6 h-full overflow-auto">{<Outlet />}</div>
     </div>
   )
 }

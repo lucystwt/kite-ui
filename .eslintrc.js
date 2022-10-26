@@ -28,5 +28,10 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
+    'jsx-a11y/no-noninteractive-element-interactions': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
   },
 }
