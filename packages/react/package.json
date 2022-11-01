@@ -24,10 +24,10 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@floating-ui/react-dom-interactions": "^0.10.2",
+    "@emotion/react": "^11.10.5",
+    "@floating-ui/react-dom-interactions": "^0.10.3",
     "clsx": "^1.2.1",
-    "framer-motion": "^7.6.1",
+    "framer-motion": "^7.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-merge-refs": "^2.0.1",
@@ -38,12 +38,12 @@
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.7",
-    "rollup": "^3.2.3",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "rollup": "^3.2.4",
     "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "tslib": "^2.4.0",
+    "tslib": "^2.4.1",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {

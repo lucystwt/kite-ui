@@ -8,17 +8,17 @@
     "dev-packages": "cd packages/react && pnpm run dev",
     "dev-examples": "cd examples/react && pnpm run dev",
     "dev": "concurrently \"pnpm run dev-packages\" \"pnpm run dev-examples\"",
-    "build-react":"rimraf ./packages/react/dist && cd packages/react && pnpm run build",
-    "example-react":"cd examples/react && pnpm run dev"
+    "build-react": "rimraf ./packages/react/dist && cd packages/react && pnpm run build",
+    "example-react": "cd examples/react && pnpm run dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.40.0",
-    "@typescript-eslint/parser": "^5.40.0",
-    "concurrently": "^7.4.0",
-    "eslint": "^8.25.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "concurrently": "^7.5.0",
+    "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
