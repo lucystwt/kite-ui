@@ -4,7 +4,7 @@ import App from '../app'
 import ButtonRoute from './button'
 import InputRoute from './input'
 import SelectRoute from './select'
-import Select2Route from './select2'
+import Select2Route from './select-2'
 
 export const components = [
   {

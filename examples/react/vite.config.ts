@@ -4,6 +4,11 @@ import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '~': '/src',
+    },
+  },
   server: {
     watch: {
       ignored: ['!**/node_modules/@kite-ui/react/**'],

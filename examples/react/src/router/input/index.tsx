@@ -1,8 +1,8 @@
 import { Input } from '@kite-ui/react'
 
-import ReactIcon from '../components/react-icon'
-import Section from '../components/section'
-import { componentDefine } from '../helpers'
+import { componentDefine } from '~/common/helpers'
+import ReactIcon from '~/components/react-icon'
+import Section from '~/components/section'
 
 const define = componentDefine['input']
 

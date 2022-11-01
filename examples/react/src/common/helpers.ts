@@ -9,7 +9,7 @@ type ComponentDefine = {
     sizes: InputProps['size'][]
   }
   select: {
-    sizes: SelectProps['size'][]
+    sizes: SelectProps<any>['size'][]
   }
 }
 

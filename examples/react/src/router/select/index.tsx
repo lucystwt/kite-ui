@@ -1,8 +1,8 @@
 import { Select } from '@kite-ui/react'
 import { useState } from 'react'
 
-import Section from '../components/section'
-import { componentDefine } from '../helpers'
+import { componentDefine } from '~/common/helpers'
+import Section from '~/components/section'
 
 const define = componentDefine['select']
 
